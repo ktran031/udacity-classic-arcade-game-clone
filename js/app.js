@@ -6,9 +6,9 @@ const Enemy = function(x, y, speed) {
     this.y = y;
     this.speed = speed;
 
-    // The image/imgSprite for our enemies, this uses
+    // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.imgSprite = 'images/enemy-bug.png';
+    this.imgSprite = 'images/enemy-bullet.png';
 };
 
 // Update the enemy's position, required method for game
@@ -19,7 +19,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
     this.x += this.speed * dt;
 
-    // when off canvas, reset position of enemy to move across again
+    // Reset the position of the enemy when they are off of the screen
     if (this.x > 550) {
         this.x = -100;
         this.speed = 100 + Math.floor(Math.random() * 512);
@@ -47,7 +47,7 @@ const Player = function(x, y, speed) {
     this.x = x;
     this.y = y;
     this.speed = speed;
-    this.imgSprite = 'images/char-princess-girl.png';
+    this.imgSprite = 'images/char-mario.png';
 };
 
 Player.prototype.update = function() {
@@ -95,12 +95,11 @@ Player.prototype.handleInput = function(keyPress) {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var allEnemies = [];
+let allEnemies = [];
 
-// Position "y" where the enemies will are created
-var enemyPosition = [60, 140, 220];
-var player = new Player(200, 380, 50);
-var enemy;
+let enemyPosition = [60, 140, 220];
+let player = new Player(200, 380, 50);
+let enemy;
 
 enemyPosition.forEach(function(posY) {
     enemy = new Enemy(0, posY, 100 + Math.floor(Math.random() * 512));
