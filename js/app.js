@@ -8,7 +8,7 @@ const Enemy = function(x, y, speed) {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.imgSprite = 'images/enemy-bullet.png';
+    this.sprite = 'images/enemy-bullet.png';
 };
 
 // Update the enemy's position, required method for game
@@ -20,12 +20,12 @@ Enemy.prototype.update = function(dt) {
     this.x += this.speed * dt;
 
     // Reset the position of the enemy when they are off of the screen
-    if (this.x > 550) {
+    if (this.x > 650) {
         this.x = -100;
-        this.speed = 100 + Math.floor(Math.random() * 512);
+        this.speed = 100 + Math.floor(Math.random() * 612);
     }
 
-    // Check for collision between player and enemies
+    // Test for contact between the player and the enemies
     if (player.x < this.x + 60 &&
         player.x + 37 > this.x &&
         player.y < this.y + 25 &&
@@ -37,7 +37,7 @@ Enemy.prototype.update = function(dt) {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.imgSprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 // Now write your own player class
@@ -47,11 +47,11 @@ const Player = function(x, y, speed) {
     this.x = x;
     this.y = y;
     this.speed = speed;
-    this.imgSprite = 'images/char-mario.png';
+    this.sprite = 'images/char-mario.png';
 };
 
 Player.prototype.update = function() {
-    // Prevent player from moving beyond canvas wall boundaries
+    // Negate the player from moving outside the canvas
     if (this.y > 380) {
         this.y = 380;
     }
@@ -64,7 +64,7 @@ Player.prototype.update = function() {
         this.x = 0;
     }
 
-    // Check for player reaching top of canvas and winning the game
+    // Check to see if the player reach the top of the page to win the game
     if (this.y < 0) {
         this.x = 200;
         this.y = 380;
@@ -72,11 +72,11 @@ Player.prototype.update = function() {
 };
 
 Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.imgSprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-Player.prototype.handleInput = function(keyPress) {
-    switch (keyPress) {
+Player.prototype.handleInput = function(key) {
+    switch (key) {
         case 'left':
             this.x -= this.speed + 50;
             break;
@@ -97,12 +97,12 @@ Player.prototype.handleInput = function(keyPress) {
 // Place the player object in a variable called player
 let allEnemies = [];
 
-let enemyPosition = [60, 140, 220];
+let enemyPos = [60, 140, 220];
 let player = new Player(200, 380, 50);
 let enemy;
 
-enemyPosition.forEach(function(posY) {
-    enemy = new Enemy(0, posY, 100 + Math.floor(Math.random() * 512));
+enemyPos.forEach(function(posY) {
+    enemy = new Enemy(0, posY, 100 + Math.floor(Math.random() * 612));
     allEnemies.push(enemy);
 });
 
